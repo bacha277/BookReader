@@ -143,4 +143,11 @@ public class DBHelper extends SQLiteOpenHelper {
         chap.setNovelId(c.getInt(c.getColumnIndex(CHAPTER_NOVEL_ID_COLUMN)));
         return chap;
     }
+
+    public Cursor searchChapterByKeyword(String keyword) {
+        Cursor c = myDB.rawQuery("SELECT * FROM " + CHAPTER_TABLE_NAME + " WHERE " + CHAPTER_CONTENT_COLUMN + " LIKE '%" + keyword + "%'",null);
+        if (c!=null)
+            c.moveToFirst();
+        return c;
+    }
 }
