@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bht.bookreader.Adapter.ChapterAdapter;
 import com.example.bht.bookreader.Adapter.NovelAdapter;
@@ -74,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.menu_search,menu);
-        MenuItem item=menu.findItem(R.id.menuSearch);
-        SearchView searchView=(SearchView)item.getActionView();
+        final MenuItem item=menu.findItem(R.id.menuSearch);
+        final SearchView searchView=(SearchView)item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
