@@ -5,40 +5,31 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.bht.bookreader.Adapter.NovelAdapter;
+import com.example.bht.bookreader.Adapter.ChapterAdapter;
 import com.example.bht.bookreader.DBHelper.DBHelper;
 import com.example.bht.bookreader.Model.Chapter;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class ChapterDetailActivity extends AppCompatActivity {
     private DBHelper myDbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chapter_content);
+
+        Intent intent=getIntent();
 
         initDbHelper();
 
-        ListView lst=(ListView)findViewById(R.id.lstNovel);
-        Cursor c=myDbHelper.getAllNovels();
-        final NovelAdapter adapter=new NovelAdapter(this,c);
-        lst.setAdapter(adapter);
+        Chapter chap = myDbHelper.getChapterById(intent.getIntExtra("chapterId", 0));
 
-        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,ChapterActivity.class);
-                intent.putExtra("novelId",(int)id);
-                startActivityForResult(intent,0);
-            }
-        });
+        TextView txtContent=(TextView)findViewById(R.id.txtContent);
 
+        txtContent.setText(chap.getContent());
     }
 
     private void initDbHelper() {

@@ -3,38 +3,48 @@ package com.example.bht.bookreader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.bht.bookreader.Adapter.NovelAdapter;
+import com.example.bht.bookreader.Adapter.ChapterAdapter;
 import com.example.bht.bookreader.DBHelper.DBHelper;
 import com.example.bht.bookreader.Model.Chapter;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by bht on 3/17/17.
+ */
+
+public class ChapterActivity extends AppCompatActivity {
     private DBHelper myDbHelper;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chapter);
+
+        Intent intent=getIntent();
 
         initDbHelper();
 
-        ListView lst=(ListView)findViewById(R.id.lstNovel);
-        Cursor c=myDbHelper.getAllNovels();
-        final NovelAdapter adapter=new NovelAdapter(this,c);
-        lst.setAdapter(adapter);
+        Cursor c = myDbHelper.getChaptersByNovelId(intent.getIntExtra("novelId", 0));
 
-        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ChapterAdapter adapter=new ChapterAdapter(this,c);
+
+        ListView lstChapter=(ListView)findViewById(R.id.lstChapter);
+
+        lstChapter.setAdapter(adapter);
+
+        lstChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,ChapterActivity.class);
-                intent.putExtra("novelId",(int)id);
+                Intent intent = new Intent(ChapterActivity.this,ChapterDetailActivity.class);
+                intent.putExtra("chapterId",(int)id);
                 startActivityForResult(intent,0);
             }
         });
