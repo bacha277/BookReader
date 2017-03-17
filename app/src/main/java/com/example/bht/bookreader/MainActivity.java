@@ -4,8 +4,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.bht.bookreader.Adapter.NovelAdapter;
 import com.example.bht.bookreader.DBHelper.DBHelper;
 import com.example.bht.bookreader.Model.Chapter;
 
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
 //        Chapter chap = myDbHelper.getChapterById(4);
 //        TextView txt=(TextView)findViewById(R.id.txt);
 //        txt.setText(chap.getContent());
+        ListView lst=(ListView)findViewById(R.id.lstNovel);
+        Cursor c=myDbHelper.getAllNovels();
+        NovelAdapter adapter=new NovelAdapter(this,c);
+        lst.setAdapter(adapter);
 
     }
 
