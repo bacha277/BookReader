@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.bht.bookreader.DBHelper.DBHelper;
 import com.example.bht.bookreader.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by bht on 3/17/17.
@@ -41,7 +42,7 @@ public class NovelAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder=(ViewHolder)view.getTag();
         int id = context.getResources().getIdentifier(context.getPackageName()+":drawable/" + cursor.getString(cursor.getColumnIndex(DBHelper.NOVEL_IMG_COLUMN)), null, null);
-        holder.img.setImageResource(id);
+        Picasso.with(context).load(id).into(holder.img);
         holder.txt.setText(cursor.getString(cursor.getColumnIndex(DBHelper.NOVEL_TITLE_COLUMN)));
     }
 }
