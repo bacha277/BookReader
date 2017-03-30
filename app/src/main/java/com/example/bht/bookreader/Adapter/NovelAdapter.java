@@ -42,7 +42,7 @@ public class NovelAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder=(ViewHolder)view.getTag();
         int id = context.getResources().getIdentifier(context.getPackageName()+":drawable/" + cursor.getString(cursor.getColumnIndex(DBHelper.NOVEL_IMG_COLUMN)), null, null);
-        Picasso.with(context).load(id).into(holder.img);
+        Picasso.with(context).load(id).fit().into(holder.img);
         holder.txt.setText(cursor.getString(cursor.getColumnIndex(DBHelper.NOVEL_TITLE_COLUMN)));
     }
 }
